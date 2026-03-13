@@ -1,203 +1,260 @@
-# 📰 The Veritas Tribune — FalseFind Frontend
-
 <div align="center">
 
-![React](https://img.shields.io/badge/React-18.3-61DAFB?style=flat-square&logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript)
-![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=flat-square&logo=vite)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-06B6D4?style=flat-square&logo=tailwindcss)
+# The Veritas Tribune
 
-**A newspaper-themed web interface for verifying news articles using ML analysis and multi-API web scraping**
+### *"Separating Fact from Fiction Since the Digital Age"*
 
-[Features](#-features) • [Setup](#-setup-guide) • [Usage](#-how-to-use) • [Architecture](#-architecture)
+<br>
+
+![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Python](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+
+<br>
+
+A vintage newspaper-themed fake news detection platform powered by **Machine Learning** and **Multi-API Web Scraping**.
+Paste any news article, get a verdict in seconds.
+
+<br>
+
+[Features](#features) · [Screenshots](#screenshots) · [Architecture](#architecture) · [Getting Started](#getting-started) · [Usage](#usage)
 
 </div>
 
+<br>
+
 ---
 
-## 🎯 What This Does
+<br>
 
-The Veritas Tribune is the frontend for **FalseFind** — a fake news detection system. It provides two ways to verify news:
+## Screenshots
 
-1. **"Verify This Story"** — Sends the article to ML models that analyze it for fake news patterns, predict the likely source, and detect impersonation.
-2. **"Scrape the Web"** — Searches the internet across multiple APIs (GNews, Google Fact Check, DuckDuckGo) to cross-reference the claim against real news sources, producing a **REAL / FAKE / UNVERIFIED** verdict with confidence %.
+<div align="center">
 
-The UI is designed with a **vintage newspaper aesthetic** — editorial typography, ink-style borders, stamp-style verdict badges, and warm parchment tones.
+### Homepage — The Newsroom
 
-## ✨ Features
+<img src="public/screenshot1.png" alt="Homepage with newspaper layout, live headlines sidebar, article input, and archives" width="900"/>
 
-| Feature | Description |
-|---------|-------------|
-| 🔍 **ML Verification** | Fake news detection, source attribution, and impersonation checking |
-| 🌐 **Web Scraping** | Multi-API search across GNews, Google Fact Check, and DuckDuckGo |
-| ✅ **Cross-Reference Verdict** | REAL / FAKE / UNVERIFIED with confidence % and explanation |
-| 📰 **Live Headlines** | Dynamic news ticker showing real headlines by category (Politics, Tech, Business, Entertainment, World) |
-| 🗂️ **History Archive** | Local storage-backed history of past verifications |
-| 🎨 **Newspaper Theme** | Vintage editorial design with Playfair Display, stamp animations, and parchment textures |
-| 📱 **Fully Responsive** | Works on desktop, tablet, and mobile |
+<br><br>
 
-## 📁 Project Structure
+### Source Category Selector
+
+<img src="public/screenshot2.png" alt="Claimed source dropdown showing category options" width="600"/>
+
+<br><br>
+
+### ML Verification Report
+
+<img src="public/screenshot3.png" alt="Verification report showing LIKELY FALSE verdict with fake news analysis, style analysis, and impersonation check" width="900"/>
+
+<br><br>
+
+### Web Investigation Report
+
+<img src="public/screenshot4.png" alt="Web scraping results showing REAL verdict at 45% confidence with sources from GNews and DuckDuckGo" width="600"/>
+
+</div>
+
+<br>
+
+---
+
+<br>
+
+## Features
+
+| | Feature | Description |
+|---|---------|-------------|
+| **ML Verification** | Verify This Story | Analyzes articles using trained ML models for fake news detection, source attribution, and impersonation checking |
+| **Web Scraping** | Scrape the Web | Cross-references claims across GNews, Google Fact Check, and DuckDuckGo APIs |
+| **Verdicts** | Confidence Scoring | Delivers REAL / FAKE / UNVERIFIED verdicts with confidence percentages and detailed explanations |
+| **Live Headlines** | News Ticker | Fetches real-time headlines across Politics, Tech, Business, Entertainment, and World categories |
+| **History** | Archives Panel | Stores past verifications in local storage for quick reference |
+| **Design** | Newspaper Aesthetic | Vintage editorial UI with blackletter mastheads, stamp-style verdicts, and parchment tones |
+| **Responsive** | Any Device | Full responsive layout that adapts from desktop to mobile |
+
+<br>
+
+---
+
+<br>
+
+## Architecture
+
+> **This project is split across two repositories:**
+
+| | Repository | Stack | Description |
+|---|------------|-------|-------------|
+| **Frontend** | [**FalseFind**](https://github.com/sanjayrohith/FalseFind) | React, TypeScript, Vite, Tailwind CSS | The newspaper-themed UI — this repo |
+| **Backend** | [**source-attribution**](https://github.com/sanjayrohith/source-attribution) | Python, FastAPI, ML Models | API server handling ML inference and web scraping |
+
+The frontend communicates with the backend via REST API at `http://localhost:8000`.
 
 ```
-frontend/
-├── src/
-│   ├── components/
-│   │   ├── ui/                      # shadcn/ui base components
-│   │   ├── NewsInput.tsx            # Article input + Verify & Scrape buttons
-│   │   ├── VerdictDisplay.tsx       # ML analysis result card with verdict stamp
-│   │   ├── ScrapeResultDisplay.tsx  # Web scraping results with source cards
-│   │   ├── HistoryPanel.tsx         # Past verification archive
-│   │   └── NewsTicker.tsx           # Live headlines sidebar
-│   ├── hooks/
-│   │   └── useFakeNewsDetector.ts   # Core hook — API calls, state, types
-│   ├── pages/
-│   │   └── Index.tsx                # Main page layout
-│   ├── lib/
-│   │   └── utils.ts                 # Utility functions
-│   ├── index.css                    # Design system — colors, fonts, animations
-│   ├── App.tsx                      # Router setup
-│   └── main.tsx                     # Entry point
-├── index.html
-├── tailwind.config.ts
-├── vite.config.ts
-├── tsconfig.json
-└── package.json
+┌─────────────────────────────────────────────────────────┐
+│                    The Veritas Tribune                   │
+│                  (React / TypeScript)                    │
+│                                                         │
+│  ┌──────────┐  ┌──────────────┐  ┌───────────────────┐  │
+│  │ Headlines │  │ Article Input │  │ History Archives  │  │
+│  │  Sidebar  │  │  + Verdicts   │  │    Sidebar        │  │
+│  └────┬─────┘  └──────┬───────┘  └───────────────────┘  │
+│       │               │                                  │
+└───────┼───────────────┼──────────────────────────────────┘
+        │               │
+        ▼               ▼
+┌─────────────────────────────────────────────────────────┐
+│              source-attribution Backend                  │
+│                 (FastAPI / Python)                       │
+│                                                         │
+│  /headlines    /analyze           /scrape-verify         │
+│  ┌─────────┐  ┌────────────────┐  ┌──────────────────┐  │
+│  │  GNews  │  │  ML Models     │  │  GNews API       │  │
+│  │   API   │  │  (Detection +  │  │  Google Fact     │  │
+│  │         │  │   Attribution) │  │  DuckDuckGo      │  │
+│  └─────────┘  └────────────────┘  └──────────────────┘  │
+└─────────────────────────────────────────────────────────┘
 ```
 
-## 🚀 Setup Guide
+<br>
+
+---
+
+<br>
+
+## Getting Started
 
 ### Prerequisites
 
 - **Node.js 18+** (or Bun)
-- **The backend must be running** — see [Backend README](https://github.com/sanjayrohith/source-attribution)
+- **Python 3.10+** (for the backend)
 
-### Step 1 — Clone & Install
+### 1. Clone Both Repos
 
 ```bash
+# Frontend
 git clone https://github.com/sanjayrohith/FalseFind.git
+
+# Backend
+git clone https://github.com/sanjayrohith/source-attribution.git
+```
+
+### 2. Start the Backend
+
+```bash
+cd source-attribution
+source venv/bin/activate
+python -m uvicorn app.main:app --reload
+# Backend runs at http://localhost:8000
+```
+
+### 3. Start the Frontend
+
+```bash
 cd FalseFind
-
 npm install
-```
-
-### Step 2 — Start the Backend
-
-The frontend talks to the backend API at `http://localhost:8000`. Make sure the backend is running first:
-
-```bash
-# In a separate terminal
-cd /path/to/backend
-source venv/bin/activate
-python -m uvicorn app.main:app --reload
-```
-
-### Step 3 — Start the Frontend
-
-```bash
 npm run dev
+# Frontend runs at http://localhost:8080
 ```
 
-Open **http://localhost:5173** (or the URL shown in terminal).
+<br>
 
-### Full Setup (Both Servers)
+---
 
-```bash
-# Terminal 1 — Backend
-cd backend
-source venv/bin/activate
-python -m uvicorn app.main:app --reload
+<br>
 
-# Terminal 2 — Frontend
-cd frontend
-npm run dev
-```
+## Usage
 
-## 🖥️ How to Use
+### Verify This Story (ML Analysis)
 
-### 1. Verify This Story (ML Analysis)
+1. Paste a news headline or full article into the text area
+2. Optionally select a claimed source category (Politics, World News, Business, Tech, Entertainment)
+3. Click **"Verify This Story"**
+4. Review the **Verification Report** — verdict stamp, fake news confidence, style analysis, and impersonation check
 
-1. Paste a news headline or article into the text area
-2. Optionally select a claimed source (Politics, Tech, etc.)
-3. Click **"Verify This Story"** (the primary button)
-4. Review the **Verification Report**:
-   - **Verdict stamp**: LIKELY TRUE / LIKELY FALSE / UNCERTAIN
-   - **Fake News Analysis**: classification + confidence %
-   - **Style Analysis**: predicted source + confidence %
-   - **Impersonation Check**: whether claimed source matches detected style
+### Scrape the Web (Multi-API Verification)
 
-### 2. Scrape the Web (Multi-API Verification)
+1. Paste any news claim into the text area
+2. Click **"Scrape the Web"**
+3. Review the **Web Investigation Report** — verdict with confidence %, explanation, fact-checks, and all discovered sources with provider badges
 
-1. Paste a news claim into the text area
-2. Click **"Scrape the Web"** (the secondary button)
-3. Review the **Web Investigation Report**:
-   - **Verdict**: REAL / FAKE / UNVERIFIED with confidence %
-   - **Explanation**: why the system reached this conclusion
-   - **Fact Checks**: existing fact-checks from Google (if found)
-   - **Sources**: all found sources with provider badges (GNews, DuckDuckGo)
+### Live Headlines
 
-### 3. Live Headlines
+The left sidebar displays real-time headlines from GNews across five categories. Headlines refresh on every page load.
 
-The left sidebar shows live headlines fetched from GNews API, one per category:
-- Politics, Tech, Business, Entertainment, World
-- Headlines refresh on every page load
-- Click any headline to read the full article
+### History Archive
 
-### 4. History Archive
+The right sidebar keeps a log of your past verifications. Click any entry to reload its results.
 
-The right sidebar shows your past verifications. Click any entry to reload it.
+<br>
 
-## 🎨 Design System
+---
 
-The UI uses a **vintage newspaper aesthetic**:
+<br>
 
-| Element | Implementation |
-|---------|---------------|
-| **Title font** | UnifrakturMaguntia (blackletter masthead) |
-| **Headline font** | Playfair Display (editorial headings) |
-| **Body font** | Source Serif 4 (readable body text) |
-| **Colors** | Warm parchment tones (HSL-based) |
-| **Shadows** | Subtle card-depth for separation |
-| **Animations** | fadeInUp entrance, stampIn verdict, hover-lift CTAs |
+## Tech Stack
 
-Colors are defined as CSS variables in `src/index.css` and can be customized.
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Framework** | React 18 | Component-based UI |
+| **Language** | TypeScript 5.8 | Type safety |
+| **Build** | Vite 5.4 (SWC) | Fast dev server and bundling |
+| **Styling** | Tailwind CSS 3.4 | Utility-first CSS |
+| **Components** | shadcn/ui (Radix) | Accessible base components |
+| **Icons** | Lucide React | Clean iconography |
+| **Dates** | date-fns | Relative time formatting |
+| **Testing** | Vitest + fast-check | Unit and property-based tests |
 
-## 🛠️ Tech Stack
+### Design System
 
-| Technology | Purpose |
-|------------|---------|
-| **React 18** | UI Framework |
-| **TypeScript** | Type Safety |
-| **Vite** | Build Tool & Dev Server |
-| **Tailwind CSS** | Utility-first Styling |
-| **shadcn/ui** | Base UI Components |
-| **Lucide Icons** | Iconography |
-| **date-fns** | Date formatting |
+| Element | Font / Style |
+|---------|-------------|
+| Masthead | UnifrakturMaguntia (blackletter) |
+| Headlines | Playfair Display (editorial serif) |
+| Body text | Source Serif 4 (readable serif) |
+| Colors | Warm parchment tones via HSL CSS variables |
+| Verdicts | Stamp-style animated badges |
 
-## 📜 Available Scripts
+<br>
+
+---
+
+<br>
+
+## Scripts
 
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start development server |
-| `npm run build` | Build for production |
+| `npm run build` | Production build |
 | `npm run preview` | Preview production build |
 | `npm run lint` | Run ESLint |
+| `npm run test` | Run tests |
 
-## 🔗 Related
+<br>
 
-- **Backend API**: [github.com/sanjayrohith/source-attribution](https://github.com/sanjayrohith/source-attribution)
+---
 
-## ⚠️ Disclaimer
+<br>
 
-This tool is for **educational and demonstration purposes only**. It uses ML heuristics and web search — it is not a definitive fact-checking source. Always verify news through multiple reputable sources before sharing.
+## Disclaimer
 
-## 📄 License
+This tool is for **educational and demonstration purposes only**. It uses ML heuristics and web search results — it is not a definitive fact-checking authority. Always verify news through multiple reputable sources before sharing.
 
-MIT License
+## License
+
+MIT
+
+<br>
 
 ---
 
 <div align="center">
 
-**The Veritas Tribune** — *Fighting Misinformation One Story at a Time*
+**The Veritas Tribune** — *Fighting Misinformation, One Story at a Time*
+
+[Frontend Repo](https://github.com/sanjayrohith/FalseFind) · [Backend Repo](https://github.com/sanjayrohith/source-attribution)
 
 </div>
